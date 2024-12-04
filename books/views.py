@@ -1,4 +1,4 @@
-from rest_framework import generics, status
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -69,11 +69,9 @@ class BookUpdateApiView(APIView):
             book = Book.objects.get(id=pk)
             data = request.data
             serializer = BookSerializer(book, data=data, partial=True)
-            if serializer.is_valid():
+            if serializer.is_valid(raise_exception=True):
                 serializer.save()
                 return Response(serializer.data)
-            else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Exception:
             return Response({
                 "status":False,
@@ -97,10 +95,11 @@ class BookCreateApiView(APIView):
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
                 return  Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        except Exception:
+        except Exception as e:
+            print("Error:", str(e))
             return Response({
                 "status": False,
-                "message":"Something went wrong"
+                "message": "Error occurred while creating the book."
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
