@@ -1,3 +1,4 @@
+from django.core.serializers import serialize
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -38,7 +39,6 @@ class BookDetailApiView(APIView):
                 "message": "Book no found",
 
             }, status=status.HTTP_404_NOT_FOUND)
-
 # class BookDeleteApiView(generics.DestroyAPIView):
 #     queryset = Book.objects.all()
 #     serializer_class = BookSerializer
@@ -76,7 +76,7 @@ class BookUpdateApiView(APIView):
             return Response({
                 "status":False,
                 "message":"book not found "
-            }, status = status.HTTP_404_NOT_FOUND)
+            }, status = status.HTTP_404_NOT_FOUND,)
 
 
 # class BookCreateApiView(generics.CreateAPIView):

@@ -16,6 +16,3 @@ class BookSerializer(serializers.ModelSerializer):
     #     if not value.isnumeric() or value <= 0:
     #         raise serializers.ValidationError("Price must be numeric")
     #     return value
-
-
-
